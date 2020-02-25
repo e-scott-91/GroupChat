@@ -199,7 +199,7 @@ public class Display1 extends javax.swing.JFrame {
         int port = Integer.parseInt(JOptionPane.showInputDialog("Which port do you want to connect to?"));
         User friend = new User(id,ip,port);
         Receiver listener = Receiver.getInstance();
-        SetupSocket socket = new SetupSocket(friend,listener,info,Display1.getInstance());
+        SetupSocket socket = new SetupSocket(friend,listener,info);
         socket.start();
         info.addSendToInfo(friend);
     }//GEN-LAST:event_jButton2ActionPerformed

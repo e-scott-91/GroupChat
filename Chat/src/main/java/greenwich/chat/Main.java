@@ -53,7 +53,7 @@ public class Main {
         if (args.length == 3) {
             serverSetup.start();
             User yourself = new User(listener.getId(),listener.getIp(),listener.getPort());
-            SetupSocket self = new SetupSocket(yourself,listener,info,display);
+            SetupSocket self = new SetupSocket(yourself,listener,info);
             self.start();
             JOptionPane.showMessageDialog(display, "You are the group coordinator. When someone new joins, can you send them a list of "
                     + "everyone elses ips and ports");
@@ -61,11 +61,11 @@ public class Main {
         } else if (args.length == 6) {
             serverSetup.start();
             User coordinator = new User(Integer.parseInt(args[5]),args[3],Integer.parseInt(args[4]));
-            SetupSocket link = new SetupSocket(coordinator,listener,info,display);
+            SetupSocket link = new SetupSocket(coordinator,listener,info);
             link.start();
             info.addSendToInfo(coordinator);
             User yourself = new User(listener.getId(),listener.getIp(),listener.getPort());
-            SetupSocket self = new SetupSocket(yourself,listener,info,display);
+            SetupSocket self = new SetupSocket(yourself,listener,info);
             self.start();
         }
         else {

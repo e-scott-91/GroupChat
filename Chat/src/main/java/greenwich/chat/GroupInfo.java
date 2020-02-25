@@ -36,10 +36,7 @@ public class GroupInfo {
             instance = new GroupInfo();
         return instance;
     }
-    
-    public static void resetInstance(){
-        instance = null;
-    }
+
     
     public void addInfo(User user){
         ids.addElement(user.id);

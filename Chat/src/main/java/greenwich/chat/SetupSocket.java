@@ -23,29 +23,45 @@ public class SetupSocket extends Thread {
     PrintWriter out;
     Receiver receiver;
     GroupInfo info;
-    Display1 display;
 
-    public SetupSocket(User user, Receiver receiver, GroupInfo info, Display1 display) {
+    public SetupSocket(User user, Receiver receiver, GroupInfo info) {
         this.id = user.id;
         this.ip = user.ip;
         this.port = user.port;
         this.receiver = receiver;
-        this.display = display;
         this.info = info;
     }
 
     public void run() {
+
+            initialiseSocket(this.ip, this.port);
+            
+            info.addWriter(out);
+            info.addWriterBK(id, out);
+            
+            
+            registerInfo(this.in, this.out, this.receiver);
+ 
+
+    }
+    
+    public PrintWriter initialiseSocket(String ip, int port){
         try {
             System.out.println("You're connected");
             Socket socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out = new PrintWriter(socket.getOutputStream(), true);     
+        } catch (IOException e){
+            System.out.println("Your connection was not successful");
+        }
+        return out;
+        
+    }
 
-            info.addWriter(out);
-            info.addWriterBK(id, out);
-
-            
-            while (in.hasNextLine()) {
+ 
+    
+    public void registerInfo(Scanner in, PrintWriter out, Receiver receiver){
+        while (in.hasNextLine()) {
                 String line = in.nextLine();
                 if (line.startsWith("SUBMIT-ID")) {
                     out.println(receiver.getId());
@@ -53,14 +69,8 @@ public class SetupSocket extends Thread {
                     out.println(receiver.getIp());
                 } else if (line.startsWith("SUBMIT-PORT")){
                     out.println(receiver.getPort());       
-                } else if (line.startsWith("MESSAGE")) {
-                    //display.textArea.append(line.substring(8) + "\n");
                 }
             }
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(display, "Your connection wasn't successful");
-        }
-
     }
+
 }

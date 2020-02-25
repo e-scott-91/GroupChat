@@ -36,14 +36,35 @@ public class Handler implements Runnable {
         }
     
     public void run()  {
-            try {                
-                System.out.println("your server is up");
-                in = new Scanner(socket.getInputStream());
-                out = new PrintWriter(socket.getOutputStream(), true);
+            try {
+                
+                systemSetUp(this.socket);
+                
                 Receiver server = Receiver.getInstance();
+                
+                registerInfo(out, in);
+                
+                processMessages(in);
+                           
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                removeUser();
+            }       
+}
 
-                // Keep requesting a name until we get a unique one.
-                while (true) {
+    public void systemSetUp(Socket socket){
+        try{
+            in = new Scanner(socket.getInputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    
+    public void registerInfo(PrintWriter out, Scanner in){
+        // Keep requesting an id until we get a unique one.
+        while (true) {
                     out.println("SUBMIT-ID");
                     id = Integer.parseInt(in.nextLine());
                     out.println("SUBMIT-IP");
@@ -54,42 +75,33 @@ public class Handler implements Runnable {
                         if (!info.getIds().contains(id)) {
                             User friend = new User(id,ip,port);
                            info.addInfo(friend);
+                           System.out.println(ip);
                             break;
                         }
                     }    
                 }
-                //SetupSocket newSocket = new SetupSocket(ip,port);
-                //newSocket.start();
-                //writers.add(out);
-                while (true) {
+    }
+    
+    public void processMessages(Scanner in){
+        while (true) {
                     String input = in.nextLine();
                     if (input.toLowerCase().startsWith("/quit")) {
                         return;
                     }
-                    //for (PrintWriter writer : writers) {
-                    //    writer.println("MESSAGE " + id + ": " + input);
-                    //}
                     Calendar cal = Calendar.getInstance();
                     SimpleDateFormat timeOnly = new SimpleDateFormat("HH:mm:ss");
                     display.textArea.append(timeOnly.format(cal.getTime()) + " - USER " + id + " : " + input + "\n");
                 }
-                
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                if (id != null) {
+    }
+    
+    public void removeUser(){
+        if (id != null) {
                     User friend = new User(id,ip,port);
                     info.removeInfo(friend);
                     info.removeSendToInfo(friend);
-                    //for (PrintWriter writer : writers) {
-                    //    writer.println("LEAVING " + id + " has left");
-                    //}
                     display.textArea.append("USER " + id + " has left" + "\n");
                 }
                 try { socket.close(); } catch (IOException e) {}
-            }
-            
-            
-        
-}
+    }
+    
 }
