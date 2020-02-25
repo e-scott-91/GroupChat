@@ -38,8 +38,7 @@ public class SetupSocket extends Thread {
             
             info.addWriter(out);
             info.addWriterBK(id, out);
-            
-            
+                        
             registerInfo(this.in, this.out, this.receiver);
  
 
