@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -24,14 +25,15 @@ public class Handler implements Runnable {
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
+    private GroupInfo info;
+    private Display1 display;
 
-    // The set of all the print writers for all the clients, used for broadcast.
-    //private static Set<PrintWriter> writers = new HashSet<>();
-    GroupInfo info = GroupInfo.getInstance();
-    Display1 display = Display1.getInstance();
 
-    public Handler(Socket socket) {
+    public Handler(Socket socket, GroupInfo info, Display1 display) {
         this.socket = socket;
+        this.info = info;
+        this.display = display;
+        
     }
 
     public void run() {
@@ -44,11 +46,15 @@ public class Handler implements Runnable {
             registerInfo(out, in);
             
             while (true) {
+                
                 String message = processMessages(in);
                 displayMessages(message);
+
             }
 
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
+            System.out.println("A user has left");
+        } catch (Exception e){
             System.out.println(e);
         } finally {
             removeUser();
@@ -77,7 +83,6 @@ public class Handler implements Runnable {
                 if (!info.getIds().contains(id)) {
                     User friend = new User(id, ip, port);
                     info.addInfo(friend);
-                    System.out.println(ip);
                     break;
                 }
             }
@@ -87,7 +92,6 @@ public class Handler implements Runnable {
     public String processMessages(Scanner in) {
         String input = in.nextLine();
         return input;
-
     }
 
     public void displayMessages(String message) {

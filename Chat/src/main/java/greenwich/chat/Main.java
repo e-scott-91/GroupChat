@@ -48,7 +48,7 @@ public class Main {
         listener.setPort(port);
         listener.setId(id);
 
-        ThreadPool serverSetup = new ThreadPool(listener, display);
+        ThreadPool serverSetup = new ThreadPool(listener,info,display);
 
         if (args.length == 3) {
             serverSetup.start();

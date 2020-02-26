@@ -8,7 +8,6 @@ package greenwich.chat;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,22 +16,27 @@ import javax.swing.JOptionPane;
 public class ThreadPool extends Thread {
     ExecutorService pool = Executors.newFixedThreadPool(500);
     Receiver listener;
+    GroupInfo info;
     Display1 display;
     
     
-    public ThreadPool(Receiver listener, Display1 display){
+    public ThreadPool(Receiver listener, GroupInfo info, Display1 display){
         this.listener = listener;
         this.display = display;
+        this.info = info;
     }
     
     public void run() {
         try (ServerSocket socket = new ServerSocket(listener.getPort())) {
             System.out.println("Your server is running...");
                 while (true) {
-                    pool.execute(new Handler(socket.accept()));
+                    pool.execute(new Handler(socket.accept(),info,display));
+                    if (pool.isShutdown())
+                        break;
+                    
                 }
             } catch (Exception e){
-                JOptionPane.showMessageDialog(display, "Your server hasn't been set up successfully, please close and try again");
+                System.out.println("Your server has not been set up successfully");
             }
     }
 }

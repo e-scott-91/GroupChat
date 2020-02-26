@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HandlerTest {
     Scanner in;
     PrintWriter out;
+    GroupInfo info = GroupInfo.getInstance();
+    Display1 display = Display1.getInstance();
     
     public HandlerTest() {
     }
@@ -55,7 +57,7 @@ public class HandlerTest {
                     ServerSocket myServer = new ServerSocket(3000);
                     System.out.println("testRegisterInfo- server socket created.");
                     myServerSocket = myServer.accept();
-                    Handler handler = new Handler(myServerSocket);
+                    Handler handler = new Handler(myServerSocket,info,display);
                     System.out.println("testRegisterInfo- server socket connected.");
                     out = new PrintWriter(myServerSocket.getOutputStream(), true);
                     in = new Scanner(myServerSocket.getInputStream());
@@ -107,7 +109,7 @@ public class HandlerTest {
                     ServerSocket myServer = new ServerSocket(3000);
                     System.out.println("testRegisterInfo- server socket created.");
                     myServerSocket = myServer.accept();
-                    Handler handler = new Handler(myServerSocket);
+                    Handler handler = new Handler(myServerSocket,info,display);
                     System.out.println("testRegisterInfo- server socket connected.");
                     out = new PrintWriter(myServerSocket.getOutputStream(), true);
                     in = new Scanner(myServerSocket.getInputStream());
