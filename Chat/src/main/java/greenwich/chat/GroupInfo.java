@@ -16,7 +16,9 @@ import javax.swing.DefaultListModel;
  * @author emmascott
  */
 public class GroupInfo {
+
     private static GroupInfo instance;
+    private static DefaultListModel<User> users = new DefaultListModel<User>();
     private static DefaultListModel<Integer> ids = new DefaultListModel<Integer>();
     private static DefaultListModel<String> ips = new DefaultListModel<String>();
     private static DefaultListModel<Integer> ports = new DefaultListModel<Integer>();
@@ -25,89 +27,111 @@ public class GroupInfo {
     private static DefaultListModel<Integer> sendToports = new DefaultListModel<Integer>();
     private static Set<PrintWriter> writers = new HashSet<>();
     private static HashMap<Integer, PrintWriter> writersByKey = new HashMap<Integer, PrintWriter>();
-    
-    
-    private GroupInfo(){
-        
+
+    private GroupInfo() {
+
     }
-    
-    public static GroupInfo getInstance(){
-        if (instance == null)
+
+    public static GroupInfo getInstance() {
+        if (instance == null) {
             instance = new GroupInfo();
+        }
         return instance;
     }
 
-    
-    public void addInfo(User user){
+    public void addInfo(User user) {
         ids.addElement(user.id);
         ips.addElement(user.ip);
         ports.addElement(user.port);
+        users.addElement(user);
     }
-    
-    public void removeInfo(User user){
+
+    public void removeInfo(User user) {
         ids.removeElement(user.id);
         ips.removeElement(user.ip);
         ports.removeElement(user.port);
+        users.removeElement(user);
     }
-    
-    public DefaultListModel<Integer> getIds(){
+
+    public DefaultListModel<Integer> getIds() {
         return ids;
     }
 
-    public DefaultListModel<String> getIps(){
+    public DefaultListModel<String> getIps() {
         return ips;
     }
 
-    public DefaultListModel<Integer> getPorts(){
+    public DefaultListModel<Integer> getPorts() {
         return ports;
     }
+    
+    public DefaultListModel<User> getUsers() {
+        return users;
+    }
 
-    public void addWriter(PrintWriter writer){
+    public void addWriter(PrintWriter writer) {
         writers.add(writer);
     }
-    
-    public void addWriterBK(int key, PrintWriter writer){
+
+    public void addWriterBK(int key, PrintWriter writer) {
         writersByKey.put(key, writer);
     }
-    
-    public void removeWriter(PrintWriter writer){
+
+    public void removeWriter(PrintWriter writer) {
         writers.remove(writer);
     }
-    
-    public void removeWriterBK(int key){
+
+    public void removeWriterBK(int key) {
         writersByKey.remove(key);
     }
-    
-    public Set<PrintWriter> getWriters(){
+
+    public Set<PrintWriter> getWriters() {
         return writers;
     }
-    
-    public PrintWriter getWriterBK(int key){
+
+    public PrintWriter getWriterBK(int key) {
         return writersByKey.get(key);
     }
 
-    public DefaultListModel<Integer> getSendToIds(){
+    public DefaultListModel<Integer> getSendToIds() {
         return sendToids;
     }
 
-
-    public DefaultListModel<String> getSendToIps(){
+    public DefaultListModel<String> getSendToIps() {
         return sendToips;
     }
 
-    public DefaultListModel<Integer> getSendToPorts(){
+    public DefaultListModel<Integer> getSendToPorts() {
         return sendToports;
     }
-    
-    public void addSendToInfo(User user){
+
+    public void addSendToInfo(User user) {
         sendToids.addElement(user.id);
         sendToips.addElement(user.ip);
         sendToports.addElement(user.port);
     }
-    
-    public void removeSendToInfo(User user){
+
+    public void removeSendToInfo(User user) {
         sendToids.removeElement(user.id);
         sendToips.removeElement(user.ip);
         sendToports.removeElement(user.port);
+    }
+
+    public User getUserById(int id) {
+        GroupInfo info = GroupInfo.getInstance();
+        User user = new User(1, "", 1);
+        Object[] objUsers = info.getUsers().toArray();
+        User[] users = new User[objUsers.length];
+        for (int i = 0; i < objUsers.length; i++) {
+            users[i] = (User) objUsers[i];
+        }
+        for (int i = 0; i < objUsers.length; i++) {
+            if (users[i].id == id) {
+                user = users[i];
+                break;
+            }
+        }
+        return user;
+
     }
 }

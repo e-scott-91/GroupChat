@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -101,15 +102,33 @@ public class Handler implements Runnable {
     }
 
     public void removeUser() {
+        Coordinator coordinator = Coordinator.getInstance();
         if (id != null) {
             User friend = new User(id, ip, port);
             info.removeInfo(friend);
             info.removeSendToInfo(friend);
             display.textArea.append("USER " + id + " has left" + "\n");
+            
+            if (id == coordinator.getCoordinator().id){
+                Object[] objIds = info.getIds().toArray();
+                Integer[] intIds = new Integer[objIds.length];
+                for (int i = 0; i < objIds.length; i++){
+                    intIds[i] = (Integer)objIds[i];
+                }
+                int highestId = 0;
+                for (int i = 0; i < intIds.length; i++){
+                    if (intIds[i]> highestId){
+                        highestId = intIds[i];
+                    }               
+                }
+                
+                coordinator.setCoordinator(info.getUserById(highestId));
+            }
         }
         try {
             socket.close();
         } catch (IOException e) {
+            System.out.println("Unable to close the socket");
         }
     }
 

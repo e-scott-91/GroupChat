@@ -19,6 +19,9 @@ public class Main {
     public static void main(String[] args) {
         Display1 display = Display1.getInstance();
         display.setVisible(true);
+        Coordinator coordinator = Coordinator.getInstance();
+        
+        
 
 
         try {
@@ -55,15 +58,17 @@ public class Main {
             User yourself = new User(listener.getId(),listener.getIp(),listener.getPort());
             SetupSocket self = new SetupSocket(yourself,listener,info);
             self.start();
+            coordinator.setCoordinator(yourself);
             JOptionPane.showMessageDialog(display, "You are the group coordinator. When someone new joins, can you send them a list of "
                     + "everyone elses ips and ports");
 
         } else if (args.length == 6) {
             serverSetup.start();
-            User coordinator = new User(Integer.parseInt(args[5]),args[3],Integer.parseInt(args[4]));
-            SetupSocket link = new SetupSocket(coordinator,listener,info);
+            User firstFriend = new User(Integer.parseInt(args[5]),args[3],Integer.parseInt(args[4]));
+            coordinator.setCoordinator(firstFriend);
+            SetupSocket link = new SetupSocket(firstFriend,listener,info);
             link.start();
-            info.addSendToInfo(coordinator);
+            info.addSendToInfo(firstFriend);
             User yourself = new User(listener.getId(),listener.getIp(),listener.getPort());
             SetupSocket self = new SetupSocket(yourself,listener,info);
             self.start();
@@ -72,6 +77,8 @@ public class Main {
             JOptionPane.showMessageDialog(display, "You entered an incorrect number of arguments, please try again");
             
         }
+        
+        
     }
     
 }
