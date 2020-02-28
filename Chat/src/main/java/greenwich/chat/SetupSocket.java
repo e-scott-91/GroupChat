@@ -23,13 +23,15 @@ public class SetupSocket extends Thread {
     PrintWriter out;
     Receiver receiver;
     GroupInfo info;
+    Display1 display;
 
-    public SetupSocket(User user, Receiver receiver, GroupInfo info) {
+    public SetupSocket(User user, Receiver receiver, GroupInfo info, Display1 display) {
         this.id = user.id;
         this.ip = user.ip;
         this.port = user.port;
         this.receiver = receiver;
         this.info = info;
+        this.display = display;
     }
 
     public void run() {
@@ -68,6 +70,8 @@ public class SetupSocket extends Thread {
                     out.println(receiver.getIp());
                 } else if (line.startsWith("SUBMIT-PORT")){
                     out.println(receiver.getPort());       
+                } else if (line.startsWith("DUPLICATE-ID")){
+                    JOptionPane.showMessageDialog(display, "Someone else already has your id, please leave and try again with another id");
                 }
             }
     }

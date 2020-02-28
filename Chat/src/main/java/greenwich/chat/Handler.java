@@ -85,6 +85,9 @@ public class Handler implements Runnable {
                     User friend = new User(id, ip, port);
                     info.addInfo(friend);
                     break;
+                } else {
+                    out.println("DUPLICATE-ID");
+                    break;
                 }
             }
         }

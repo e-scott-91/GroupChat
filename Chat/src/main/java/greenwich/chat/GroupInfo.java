@@ -119,12 +119,12 @@ public class GroupInfo {
 
     public User getUserById(int id) {
         GroupInfo info = GroupInfo.getInstance();
-        User user = new User(1, "", 1);
         Object[] objUsers = info.getUsers().toArray();
         User[] users = new User[objUsers.length];
         for (int i = 0; i < objUsers.length; i++) {
             users[i] = (User) objUsers[i];
         }
+        User user = null;
         for (int i = 0; i < objUsers.length; i++) {
             if (users[i].id == id) {
                 user = users[i];
