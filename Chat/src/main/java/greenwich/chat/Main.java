@@ -43,28 +43,24 @@ public class Main {
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
             String ip = inetAddress.getHostAddress();
-            listener.setIp(ip);
+            User self = new User(Integer.parseInt(args[0]),ip,Integer.parseInt(args[1]));
+            listener.setReceiver(self);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(display, "You are not connected to the internet");
         }
-        int id = Integer.parseInt(args[0]);
-        int port = Integer.parseInt(args[1]);
 
         GroupInfo info = GroupInfo.getInstance();
-        listener.setPort(port);
-        listener.setId(id);
-
+        User self = listener.getReceiver();
         ThreadPool serverSetup = new ThreadPool(listener, info, display);
 
         if (args.length == 2) {
             serverSetup.start();
-            User yourself = new User(listener.getId(), listener.getIp(), listener.getPort());
-            SetupSocket self = new SetupSocket(yourself, listener, info, display);
-            self.start();
-            coordinator.setCoordinator(yourself);
+            
+            SetupSocket own = new SetupSocket(self, listener, info, display);
+            own.start();
+            coordinator.setCoordinator(self);
             JOptionPane.showMessageDialog(display, "You are the group coordinator. When someone new joins, can you send them a list of "
                     + "everyone elses ips and ports");
-
         } else if (args.length == 5) {
             serverSetup.start();
             User firstFriend = new User(Integer.parseInt(args[2]), args[3], Integer.parseInt(args[4]));
@@ -72,9 +68,8 @@ public class Main {
             SetupSocket link = new SetupSocket(firstFriend, listener, info, display);
             link.start();
             info.addSendToInfo(firstFriend);
-            User yourself = new User(listener.getId(), listener.getIp(), listener.getPort());
-            SetupSocket self = new SetupSocket(yourself, listener, info, display);
-            self.start();
+            SetupSocket own = new SetupSocket(self, listener, info, display);
+            own.start();
         } else {
             JOptionPane.showMessageDialog(display, "You entered an incorrect number of arguments, please try again");
 

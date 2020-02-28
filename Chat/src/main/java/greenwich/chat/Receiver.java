@@ -13,6 +13,7 @@ import java.net.InetAddress;
  */
 public class Receiver {
     private static Receiver instance = null;
+    private static User receiver;
     private String ipAddress;
     private int port;
     private int id;
@@ -28,31 +29,25 @@ public class Receiver {
         return instance;
     }
 
-    public void setIp(String ip) {
-        this.ipAddress = ip;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
+    public User getReceiver(){
+        return this.receiver;
+    }
+    
     public String getIp() {
-        return ipAddress;
+        return receiver.ip;
     }
 
-    public InetAddress getIpAddress() throws Exception {   
-        return InetAddress.getByName(ipAddress);    
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
 
     public int getPort() {
-        return port;
+        return receiver.port;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getId() {
-        return id;
+        return receiver.id;
     }
 }

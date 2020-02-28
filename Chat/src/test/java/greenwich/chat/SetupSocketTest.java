@@ -40,9 +40,8 @@ public class SetupSocketTest {
         SetupSocketTest.user = new User(1, "localhost", 3000);
         SetupSocketTest.info = GroupInfo.getInstance();
         SetupSocketTest.receiver = Receiver.getInstance();
-        receiver.setId(2);
-        receiver.setIp("localhost");
-        receiver.setPort(2);
+        User self = new User(2,"localhost",2);
+        receiver.setReceiver(self);
 
     }
 

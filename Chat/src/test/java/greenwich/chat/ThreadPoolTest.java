@@ -48,10 +48,9 @@ public class ThreadPoolTest {
      */
     @Test
     public void testRun() {
-        System.out.println("run");        
-        listener.setId(1);
-        listener.setIp("localhost");
-        listener.setPort(3000);
+        System.out.println("run");
+        User self = new User(1,"localhost",3000);
+        listener.setReceiver(self);
         Thread thread = new Thread() {
             public void run() {
                 try {       
