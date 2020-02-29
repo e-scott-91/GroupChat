@@ -38,14 +38,14 @@ public class GroupInfoTest {
     public void setUp() throws Exception {
         User user = new User(1,"1",1);
         User user2 = new User(2,"2",2);
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         instance.addInfo(user);
         instance.addInfo(user2);
     }
 
     @org.junit.jupiter.api.AfterEach
     public void tearDown() throws Exception {
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         User user = new User(1,"1",1);
         User user2 = new User(2,"2",2);
         instance.removeInfo(user);
@@ -60,7 +60,7 @@ public class GroupInfoTest {
     @org.junit.jupiter.api.Test
     public void testAddInfo() {
         System.out.println("addInfo");
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         User user = new User(3,"3",3);
         instance.addInfo(user);
         DefaultListModel<Integer> ids = instance.getIds();
@@ -81,7 +81,7 @@ public class GroupInfoTest {
     @org.junit.jupiter.api.Test
     public void testRemoveInfo() {
         System.out.println("removeInfo");
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         User user2 = new User(2,"2",2);
         instance.removeInfo(user2);
         DefaultListModel<Integer> ids = instance.getIds();
@@ -96,7 +96,7 @@ public class GroupInfoTest {
     public void testAddSendToInfo() {
         System.out.println("addSendToInfo");
         User user = new User(1,"1",1);
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         instance.addSendToInfo(user);
         DefaultListModel<Integer> ids = instance.getSendToIds();
         DefaultListModel<String> ips = instance.getSendToIps();
@@ -118,7 +118,7 @@ public class GroupInfoTest {
         System.out.println("removeSendToInfo");
         User user = new User(1,"1",1);
         User user2 = new User(2,"2",2);
-        GroupInfo instance = GroupInfo.getInstance();
+        UserManager instance = UserManager.getInstance();
         instance.addSendToInfo(user);
         instance.addSendToInfo(user2);
         instance.removeSendToInfo(user);

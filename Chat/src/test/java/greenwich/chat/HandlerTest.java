@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HandlerTest {
     Scanner in;
     PrintWriter out;
-    GroupInfo info = GroupInfo.getInstance();
+    UserManager info = UserManager.getInstance();
     Display1 display = Display1.getInstance();
     
     public HandlerTest() {

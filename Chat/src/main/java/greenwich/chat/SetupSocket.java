@@ -21,11 +21,11 @@ public class SetupSocket extends Thread {
     private int id;
     Scanner in;
     PrintWriter out;
-    Receiver receiver;
-    GroupInfo info;
+    ReceiverManager receiver;
+    UserManager info;
     Display1 display;
 
-    public SetupSocket(User user, Receiver receiver, GroupInfo info, Display1 display) {
+    public SetupSocket(User user, ReceiverManager receiver, UserManager info, Display1 display) {
         this.id = user.id;
         this.ip = user.ip;
         this.port = user.port;
@@ -55,21 +55,21 @@ public class SetupSocket extends Thread {
         } catch (IOException e){
             System.out.println("Your connection was not successful");
         }
+
         return out;
-        
     }
 
  
     
-    public void registerInfo(Scanner in, PrintWriter out, Receiver receiver){
+    public void registerInfo(Scanner in, PrintWriter out, ReceiverManager receiver){
         while (in.hasNextLine()) {
                 String line = in.nextLine();
                 if (line.startsWith("SUBMIT-ID")) {
-                    out.println(receiver.getId());
+                    out.println(receiver.getRecId());
                 } else if (line.startsWith("SUBMIT-IP")) {
-                    out.println(receiver.getIp());
+                    out.println(receiver.getRecIp());
                 } else if (line.startsWith("SUBMIT-PORT")){
-                    out.println(receiver.getPort());       
+                    out.println(receiver.getRecPort());       
                 } else if (line.startsWith("DUPLICATE-ID")){
                     JOptionPane.showMessageDialog(display, "Someone else already has your id, please leave and try again with another id");
                 }

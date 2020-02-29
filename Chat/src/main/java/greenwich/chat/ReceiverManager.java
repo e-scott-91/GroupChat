@@ -11,20 +11,18 @@ import java.net.InetAddress;
  *
  * @author emmascott
  */
-public class Receiver {
-    private static Receiver instance = null;
-    private static User receiver;
-    private String ipAddress;
-    private int port;
-    private int id;
+public class ReceiverManager {
+    private static ReceiverManager instance = null;
+    private User receiver;
 
-    private Receiver() {
+
+    private ReceiverManager() {
 
     }
 
-    public static Receiver getInstance() {
+    public static ReceiverManager getInstance() {
         if (instance == null) {
-            instance = new Receiver();
+            instance = new ReceiverManager();
         }
         return instance;
     }
@@ -37,17 +35,17 @@ public class Receiver {
         return this.receiver;
     }
     
-    public String getIp() {
+    public String getRecIp() {
         return receiver.ip;
     }
 
 
-    public int getPort() {
+    public int getRecPort() {
         return receiver.port;
     }
 
 
-    public int getId() {
+    public int getRecId() {
         return receiver.id;
     }
 }

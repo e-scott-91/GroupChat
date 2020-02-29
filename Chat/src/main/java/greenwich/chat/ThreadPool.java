@@ -14,20 +14,20 @@ import java.util.concurrent.Executors;
  * @author emmascott
  */
 public class ThreadPool extends Thread {
-    ExecutorService pool = Executors.newFixedThreadPool(500);
-    Receiver listener;
-    GroupInfo info;
+    ExecutorService pool = Executors.newFixedThreadPool(50);
+    ReceiverManager listener;
+    UserManager info;
     Display1 display;
     
     
-    public ThreadPool(Receiver listener, GroupInfo info, Display1 display){
+    public ThreadPool(ReceiverManager listener, UserManager info, Display1 display){
         this.listener = listener;
         this.display = display;
         this.info = info;
     }
     
     public void run() {
-        try (ServerSocket socket = new ServerSocket(listener.getPort())) {
+        try (ServerSocket socket = new ServerSocket(listener.getRecPort())) {
             System.out.println("Your server is running...");
                 while (true) {
                     pool.execute(new Handler(socket.accept(),info,display));

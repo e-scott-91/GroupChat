@@ -15,9 +15,9 @@ import javax.swing.DefaultListModel;
  *
  * @author emmascott
  */
-public class GroupInfo {
+public class UserManager {
 
-    private static GroupInfo instance;
+    private static UserManager instance;
     private static DefaultListModel<User> users = new DefaultListModel<User>();
     private static DefaultListModel<Integer> ids = new DefaultListModel<Integer>();
     private static DefaultListModel<String> ips = new DefaultListModel<String>();
@@ -28,13 +28,13 @@ public class GroupInfo {
     private static Set<PrintWriter> writers = new HashSet<>();
     private static HashMap<Integer, PrintWriter> writersByKey = new HashMap<Integer, PrintWriter>();
 
-    private GroupInfo() {
+    private UserManager() {
 
     }
 
-    public static GroupInfo getInstance() {
+    public static UserManager getInstance() {
         if (instance == null) {
-            instance = new GroupInfo();
+            instance = new UserManager();
         }
         return instance;
     }
@@ -118,7 +118,7 @@ public class GroupInfo {
     }
 
     public User getUserById(int id) {
-        GroupInfo info = GroupInfo.getInstance();
+        UserManager info = UserManager.getInstance();
         Object[] objUsers = info.getUsers().toArray();
         User[] users = new User[objUsers.length];
         for (int i = 0; i < objUsers.length; i++) {

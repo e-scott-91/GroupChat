@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class Display1 extends javax.swing.JFrame {
 
     private static Display1 instance = null;
-    GroupInfo info = GroupInfo.getInstance();
+    UserManager info = UserManager.getInstance();
 
 
     private Display1() {
@@ -229,7 +229,7 @@ public class Display1 extends javax.swing.JFrame {
         String ip = JOptionPane.showInputDialog("What ip would you like to connect to?");
         int port = Integer.parseInt(JOptionPane.showInputDialog("Which port do you want to connect to?"));
         User friend = new User(id,ip,port);
-        Receiver listener = Receiver.getInstance();
+        ReceiverManager listener = ReceiverManager.getInstance();
         Display1 display = Display1.getInstance();
         SetupSocket socket = new SetupSocket(friend,listener,info,display);
         socket.start();

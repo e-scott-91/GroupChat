@@ -19,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author emmascott
  */
 public class ThreadPoolTest {
-    GroupInfo info = GroupInfo.getInstance();
+    UserManager info = UserManager.getInstance();
     Display1 display = Display1.getInstance();
-    Receiver listener = Receiver.getInstance();
+    ReceiverManager listener = ReceiverManager.getInstance();
     ThreadPool threadPool = new ThreadPool(listener,info,display);
     
     public ThreadPoolTest() {

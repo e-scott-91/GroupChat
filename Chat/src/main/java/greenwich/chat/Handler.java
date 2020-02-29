@@ -26,11 +26,11 @@ public class Handler implements Runnable {
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
-    private GroupInfo info;
+    private UserManager info;
     private Display1 display;
 
 
-    public Handler(Socket socket, GroupInfo info, Display1 display) {
+    public Handler(Socket socket, UserManager info, Display1 display) {
         this.socket = socket;
         this.info = info;
         this.display = display;
@@ -42,7 +42,7 @@ public class Handler implements Runnable {
 
             systemSetUp(this.socket);
 
-            Receiver server = Receiver.getInstance();
+            ReceiverManager server = ReceiverManager.getInstance();
 
             registerInfo(out, in);
             
@@ -105,7 +105,7 @@ public class Handler implements Runnable {
     }
 
     public void removeUser() {
-        Coordinator coordinator = Coordinator.getInstance();
+        CoordinatorManager coordinator = CoordinatorManager.getInstance();
         if (id != null) {
             User friend = new User(id, ip, port);
             info.removeInfo(friend);

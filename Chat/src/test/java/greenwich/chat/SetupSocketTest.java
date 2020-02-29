@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SetupSocketTest {
 
     public static User user;
-    public static GroupInfo info;
-    public static Receiver receiver;
+    public static UserManager info;
+    public static ReceiverManager receiver;
     public static Scanner in;
     public static PrintWriter out;
     public static Display1 display = Display1.getInstance();
@@ -38,8 +38,8 @@ public class SetupSocketTest {
     public static void init() {
         System.out.println("set up class");
         SetupSocketTest.user = new User(1, "localhost", 3000);
-        SetupSocketTest.info = GroupInfo.getInstance();
-        SetupSocketTest.receiver = Receiver.getInstance();
+        SetupSocketTest.info = UserManager.getInstance();
+        SetupSocketTest.receiver = ReceiverManager.getInstance();
         User self = new User(2,"localhost",2);
         receiver.setReceiver(self);
 

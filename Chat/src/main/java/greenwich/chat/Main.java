@@ -20,8 +20,8 @@ public class Main {
     public static void main(String[] args) {
         Display1 display = Display1.getInstance();
         display.setVisible(true);
-        Coordinator coordinator = Coordinator.getInstance();
-        Receiver listener = Receiver.getInstance();
+        CoordinatorManager coordinator = CoordinatorManager.getInstance();
+        ReceiverManager listener = ReceiverManager.getInstance();
 
         
         try {
@@ -49,7 +49,7 @@ public class Main {
             JOptionPane.showMessageDialog(display, "You are not connected to the internet");
         }
 
-        GroupInfo info = GroupInfo.getInstance();
+        UserManager info = UserManager.getInstance();
         User self = listener.getReceiver();
         ThreadPool serverSetup = new ThreadPool(listener, info, display);
 
