@@ -27,8 +27,10 @@ public class ThreadPool extends Thread {
     }
     
     public void run() {
+        //Create a new ServerSocket with the port number given as a commandline argument
         try (ServerSocket socket = new ServerSocket(listener.getRecPort())) {
             System.out.println("Your server is running...");
+                //Runs continuously waiting for sockets to connect to the server
                 while (true) {
                     pool.execute(new Handler(socket.accept(),info,display));
                     if (pool.isShutdown())

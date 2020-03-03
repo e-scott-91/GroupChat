@@ -82,6 +82,9 @@ public class UserManager {
     }
 
     public void removeWriterBK(int key) {
+        PrintWriter writer = getWriterBK(key);
+        writer.println("this is working");
+        this.removeWriter(writer);
         writersByKey.remove(key);
     }
 

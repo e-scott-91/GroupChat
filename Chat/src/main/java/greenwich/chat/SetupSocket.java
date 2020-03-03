@@ -38,6 +38,8 @@ public class SetupSocket extends Thread {
 
             initialiseSocket(this.ip, this.port);
             
+            //Adds the newly created PrintWriter to the list of PrintWriters that
+            //the GUI's "send message" functionality sends messages through 
             info.addWriter(out);
             info.addWriterBK(id, out);
                         
@@ -46,21 +48,22 @@ public class SetupSocket extends Thread {
 
     }
     
+    //Create a new socket and register the PrintWriter and Scanner
     public PrintWriter initialiseSocket(String ip, int port){
         try {
-            System.out.println("You're connected");
             Socket socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);     
         } catch (IOException e){
-            System.out.println("Your connection was not successful");
+            JOptionPane.showMessageDialog(display, "Your connection was not successful, please try adding the user again using the AddFriend button");
         }
 
         return out;
     }
 
  
-    
+    //Provides the users details to the user they are connecting with
+    //and catches the error if they are trying to register a used id
     public void registerInfo(Scanner in, PrintWriter out, ReceiverManager receiver){
         while (in.hasNextLine()) {
                 String line = in.nextLine();

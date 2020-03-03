@@ -42,26 +42,28 @@ public class Handler implements Runnable {
 
             systemSetUp(this.socket);
 
-            ReceiverManager server = ReceiverManager.getInstance();
-
             registerInfo(out, in);
             
+            //Loops continuously until the user leaves or an error occurs
             while (true) {
                 
                 String message = processMessages(in);
                 displayMessages(message);
 
             }
-
+        //Occurs when there is no ".nextLine" in the scanner
+        //(i.e. when the user has left)
         } catch (NoSuchElementException e) {
             System.out.println("A user has left");
         } catch (Exception e){
             System.out.println(e);
+        //Runs when the user has left or if an error occurs
         } finally {
             removeUser();
         }
     }
 
+    //Creates new PrintWriters and Scanners for the socket provided
     public void systemSetUp(Socket socket) {
         try {
             in = new Scanner(socket.getInputStream());
@@ -72,7 +74,7 @@ public class Handler implements Runnable {
     }
 
     public void registerInfo(PrintWriter out, Scanner in) {
-        // Keep requesting an id until we get a unique one.
+        // Requests user information from the socket trying to connect
         while (true) {
             out.println("SUBMIT-ID");
             id = Integer.parseInt(in.nextLine());
@@ -80,11 +82,14 @@ public class Handler implements Runnable {
             ip = in.nextLine();
             out.println("SUBMIT-PORT");
             port = Integer.parseInt(in.nextLine());
+            //Registers the user's information
             synchronized (info) {
                 if (!info.getIds().contains(id)) {
                     User friend = new User(id, ip, port);
                     info.addInfo(friend);
                     break;
+                //If the id is already registered it will send a message
+                //to the user trying to connect
                 } else {
                     out.println("DUPLICATE-ID");
                     break;
@@ -93,16 +98,19 @@ public class Handler implements Runnable {
         }
     }
 
+    
     public String processMessages(Scanner in) {
         String input = in.nextLine();
         return input;
     }
 
+    //Adds a time stamp to the message from the scanner and displays it on the GUI
     public void displayMessages(String message) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat timeOnly = new SimpleDateFormat("HH:mm:ss");
         display.textArea.append(timeOnly.format(cal.getTime()) + " - USER " + id + " : " + message + "\n");
     }
+
 
     public void removeUser() {
         CoordinatorManager coordinator = CoordinatorManager.getInstance();
@@ -112,6 +120,8 @@ public class Handler implements Runnable {
             info.removeSendToInfo(friend);
             display.textArea.append("USER " + id + " has left" + "\n");
             
+            //Checks to see if the user that has left is the coordinator
+            //If it is, it assigns the coordinator role to the user with the highest ID
             if (id == coordinator.getCoordinator().id){
                 Object[] objIds = info.getIds().toArray();
                 Integer[] intIds = new Integer[objIds.length];
