@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author emmascott
  */
-public class SetupSocket extends Thread {
+public class SetupSocket extends Thread implements ISetupSocket {
     private int port;
     private String ip;
     private int id;
@@ -23,15 +23,13 @@ public class SetupSocket extends Thread {
     PrintWriter out;
     ReceiverManager receiver;
     UserManager info;
-    Display1 display;
 
-    public SetupSocket(User user, ReceiverManager receiver, UserManager info, Display1 display) {
+    public SetupSocket(User user, ReceiverManager receiver, UserManager info) {
         this.id = user.id;
         this.ip = user.ip;
         this.port = user.port;
         this.receiver = receiver;
         this.info = info;
-        this.display = display;
     }
 
     public void run() {
@@ -40,8 +38,7 @@ public class SetupSocket extends Thread {
             
             //Adds the newly created PrintWriter to the list of PrintWriters that
             //the GUI's "send message" functionality sends messages through 
-            info.addWriter(out);
-            info.addWriterBK(id, out);
+            info.addWriter(id, out);
                         
             registerInfo(this.in, this.out, this.receiver);
  
@@ -55,7 +52,7 @@ public class SetupSocket extends Thread {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);     
         } catch (IOException e){
-            JOptionPane.showMessageDialog(display, "Your connection was not successful, please try adding the user again using the AddFriend button");
+            JOptionPane.showMessageDialog(null, "Your connection was not successful, please try adding the user again using the AddFriend button");
         }
 
         return out;
@@ -68,13 +65,13 @@ public class SetupSocket extends Thread {
         while (in.hasNextLine()) {
                 String line = in.nextLine();
                 if (line.startsWith("SUBMIT-ID")) {
-                    out.println(receiver.getRecId());
+                    out.println(receiver.getReceiver().id);
                 } else if (line.startsWith("SUBMIT-IP")) {
-                    out.println(receiver.getRecIp());
+                    out.println(receiver.getReceiver().ip);
                 } else if (line.startsWith("SUBMIT-PORT")){
-                    out.println(receiver.getRecPort());       
+                    out.println(receiver.getReceiver().port);       
                 } else if (line.startsWith("DUPLICATE-ID")){
-                    JOptionPane.showMessageDialog(display, "Someone else already has your id, please leave and try again with another id");
+                    JOptionPane.showMessageDialog(null, "Someone else already has your id, please leave and try again with another id");
                 }
             }
     }

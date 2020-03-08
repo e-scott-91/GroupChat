@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ThreadPoolTest {
     UserManager info = UserManager.getInstance();
-    Display1 display = Display1.getInstance();
+    ChatDisplay display = ChatDisplay.getInstance();
     ReceiverManager listener = ReceiverManager.getInstance();
-    ThreadPool threadPool = new ThreadPool(listener,info,display);
+    ThreadPool threadPool = new ThreadPool(listener,info);
     
     public ThreadPoolTest() {
     }

@@ -24,7 +24,7 @@ public class HandlerTest {
     Scanner in;
     PrintWriter out;
     UserManager info = UserManager.getInstance();
-    Display1 display = Display1.getInstance();
+    ChatDisplay display = ChatDisplay.getInstance();
     
     public HandlerTest() {
     }
@@ -90,6 +90,9 @@ public class HandlerTest {
                     break;
                 }
             }
+            User user = new User(3,"localhost",3);
+            info.removeInfo(user);
+            System.out.println("User removed");
         } catch (Exception e){
             System.out.println(e);
         }
@@ -105,7 +108,7 @@ public class HandlerTest {
             public void run() {
                 Socket myServerSocket = null;
                 try {
-                    ServerSocket myServer = new ServerSocket(3000);
+                    ServerSocket myServer = new ServerSocket(3001);
                     System.out.println("testRegisterInfo- server socket created.");
                     myServerSocket = myServer.accept();
                     Handler handler = new Handler(myServerSocket,info,display);
@@ -123,7 +126,7 @@ public class HandlerTest {
         
         mockServer.start();
         try {
-            Socket socket = new Socket("localhost",3000);
+            Socket socket = new Socket("localhost",3001);
             Scanner s = new Scanner(socket.getInputStream());
             PrintWriter p = new PrintWriter(socket.getOutputStream(), true);
             while (s.hasNextLine()) {
@@ -160,7 +163,7 @@ public class HandlerTest {
             public void run() {
                 Socket myServerSocket = null;
                 try {
-                    ServerSocket myServer = new ServerSocket(3000);
+                    ServerSocket myServer = new ServerSocket(3003);
                     System.out.println("testRegisterInfo- server socket created.");
                     myServerSocket = myServer.accept();
                     Handler handler = new Handler(myServerSocket,info,display);
@@ -179,7 +182,7 @@ public class HandlerTest {
         mockServer.start();
         
         try {
-            Socket socket = new Socket("localhost",3000);
+            Socket socket = new Socket("localhost",3003);
             PrintWriter p = new PrintWriter(socket.getOutputStream(), true);
             p.println("testMessage");
             socket.close();
@@ -189,6 +192,21 @@ public class HandlerTest {
         }
     }
 
+    @Test
+    public void reassignCoordinator(){
+        CoordinatorManager coordinatorM = CoordinatorManager.getInstance();
+        Socket socket = null;
+        User user1 = new User(1,"localhost",1);
+        User user2 = new User(2,"localhost",2);
+        User user3 = new User(3,"localhost",3);
+        info.addInfo(user1);
+        info.addInfo(user2);
+        info.addInfo(user3);
+        coordinatorM.setCoordinator(user1);
+        Handler handler = new Handler(socket, info, display);
+        handler.reassignCoordinator(1);
+        assertEquals(3,coordinatorM.getCoordinator().id);
+    }
     
     
 }

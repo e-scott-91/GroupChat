@@ -11,7 +11,7 @@ import java.net.InetAddress;
  *
  * @author emmascott
  */
-public class ReceiverManager {
+public class ReceiverManager implements IReceiverMan {
     private static ReceiverManager instance = null;
     private User receiver;
 
@@ -34,18 +34,5 @@ public class ReceiverManager {
     public User getReceiver(){
         return this.receiver;
     }
-    
-    public String getRecIp() {
-        return receiver.ip;
-    }
 
-
-    public int getRecPort() {
-        return receiver.port;
-    }
-
-
-    public int getRecId() {
-        return receiver.id;
-    }
 }

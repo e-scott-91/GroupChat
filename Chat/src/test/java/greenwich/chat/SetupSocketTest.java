@@ -29,7 +29,7 @@ public class SetupSocketTest {
     public static ReceiverManager receiver;
     public static Scanner in;
     public static PrintWriter out;
-    public static Display1 display = Display1.getInstance();
+    public static ChatDisplay display = ChatDisplay.getInstance();
 
     public SetupSocketTest() {
     }
@@ -83,7 +83,7 @@ public class SetupSocketTest {
             }
         };
         mockServer.start();
-        SetupSocket instance = new SetupSocket(user, receiver, info,display);
+        SetupSocket instance = new SetupSocket(user, receiver, info);
         PrintWriter out = instance.initialiseSocket(user.ip, user.port);
 
     }
@@ -141,7 +141,7 @@ public class SetupSocketTest {
             System.out.println("testRegisterInfo- connection successful");
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
-            SetupSocket instance = new SetupSocket(user, receiver, info,display);
+            SetupSocket instance = new SetupSocket(user, receiver, info);
             instance.registerInfo(in, out, receiver);
         } catch (Exception e) {
             System.out.println(e);

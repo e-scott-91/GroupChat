@@ -69,11 +69,9 @@ public class UserManager {
         return users;
     }
 
-    public void addWriter(PrintWriter writer) {
-        writers.add(writer);
-    }
 
-    public void addWriterBK(int key, PrintWriter writer) {
+    public void addWriter(int key, PrintWriter writer) {
+        writers.add(writer);
         writersByKey.put(key, writer);
     }
 

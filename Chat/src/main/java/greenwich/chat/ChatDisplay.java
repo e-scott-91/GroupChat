@@ -12,19 +12,19 @@ import javax.swing.JOptionPane;
  *
  * @author emmascott
  */
-public class Display1 extends javax.swing.JFrame {
+public class ChatDisplay extends javax.swing.JFrame implements Display {
 
-    private static Display1 instance = null;
+    private static ChatDisplay instance = null;
     UserManager info = UserManager.getInstance();
 
 
-    private Display1() {
+    private ChatDisplay() {
         initComponents();
     }
 
-    public static Display1 getInstance() {
+    public static ChatDisplay getInstance() {
         if (instance == null) {
-            instance = new Display1();
+            instance = new ChatDisplay();
         }
         return instance;
     }
@@ -39,7 +39,7 @@ public class Display1 extends javax.swing.JFrame {
     private void initComponents() {
 
         textField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        messageSomeone = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -48,30 +48,30 @@ public class Display1 extends javax.swing.JFrame {
         ips = new javax.swing.JList<>(info.getIps());
         jScrollPane4 = new javax.swing.JScrollPane();
         ports = new javax.swing.JList<>(info.getPorts());
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        addFriend = new javax.swing.JButton();
+        receiveFromTitle = new javax.swing.JTextField();
+        sendToTitle = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>(info.getSendToIds());
+        sendToIds = new javax.swing.JList<>(info.getSendToIds());
         jScrollPane6 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>(info.getSendToIps());
+        sendToIps = new javax.swing.JList<>(info.getSendToIps());
         jScrollPane7 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>(info.getSendToPorts());
-        jButton3 = new javax.swing.JButton();
+        sendToPorts = new javax.swing.JList<>(info.getSendToPorts());
+        messageAll = new javax.swing.JButton();
         coordId = new javax.swing.JTextField();
         coordIp = new javax.swing.JTextField();
         coordPort = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        coordTitle = new javax.swing.JTextField();
+        removeUser = new javax.swing.JButton();
+        removeSendTo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jButton1.setText("Send Message To All");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        messageSomeone.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        messageSomeone.setText("Send Message To All");
+        messageSomeone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                messageSomeoneActionPerformed(evt);
             }
         });
 
@@ -87,52 +87,52 @@ public class Display1 extends javax.swing.JFrame {
 
         jScrollPane4.setViewportView(ports);
 
-        jButton2.setText("Add friend");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addFriend.setText("Add friend");
+        addFriend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addFriendActionPerformed(evt);
             }
         });
 
-        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jTextField1.setText("You're receiving messages from");
+        receiveFromTitle.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        receiveFromTitle.setText("You're receiving messages from");
 
-        jTextField2.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jTextField2.setText("Who's receiving your messages?");
+        sendToTitle.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        sendToTitle.setText("Who's receiving your messages?");
 
-        jScrollPane5.setViewportView(jList1);
+        jScrollPane5.setViewportView(sendToIds);
 
-        jScrollPane6.setViewportView(jList2);
+        jScrollPane6.setViewportView(sendToIps);
 
-        jScrollPane7.setViewportView(jList3);
+        jScrollPane7.setViewportView(sendToPorts);
 
-        jButton3.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jButton3.setText("Send Message To Somone");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        messageAll.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        messageAll.setText("Send Message To Somone");
+        messageAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                messageAllActionPerformed(evt);
             }
         });
 
         coordId.setEditable(false);
         coordId.setColumns(1);
 
-        jTextField6.setEditable(false);
-        jTextField6.setText(" Coordinator-");
+        coordTitle.setEditable(false);
+        coordTitle.setText(" Coordinator-");
 
-        jButton4.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jButton4.setText("<- Remove User");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        removeUser.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        removeUser.setText("<- Remove User");
+        removeUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                removeUserActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jButton5.setText("<- Remove User");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        removeSendTo.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        removeSendTo.setText("<- Remove User");
+        removeSendTo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                removeSendToActionPerformed(evt);
             }
         });
 
@@ -144,7 +144,7 @@ public class Display1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(coordTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(coordId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,15 +159,15 @@ public class Display1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(receiveFromTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                .addComponent(removeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(messageSomeone, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,11 +180,11 @@ public class Display1 extends javax.swing.JFrame {
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(messageAll, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(sendToTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(removeSendTo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -198,13 +198,13 @@ public class Display1 extends javax.swing.JFrame {
                             .addComponent(coordId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(coordIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(coordPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(coordTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(7, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4))
+                            .addComponent(receiveFromTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(removeUser))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,8 +217,8 @@ public class Display1 extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton5))
+                                            .addComponent(sendToTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(removeSendTo))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,12 +228,12 @@ public class Display1 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                            .addComponent(messageSomeone, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(addFriend)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(messageAll))
                     .addComponent(textField))
                 .addGap(23, 23, 23))
         );
@@ -241,61 +241,59 @@ public class Display1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void messageSomeoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageSomeoneActionPerformed
         for (PrintWriter writer : info.getWriters()) {
             writer.println(textField.getText());
         }
         textField.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_messageSomeoneActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
         int id = Integer.parseInt(JOptionPane.showInputDialog("What is the id of the person you'd like to connect to?"));
         String ip = JOptionPane.showInputDialog("What ip would you like to connect to?");
         int port = Integer.parseInt(JOptionPane.showInputDialog("Which port do you want to connect to?"));
         User friend = new User(id,ip,port);
         ReceiverManager listener = ReceiverManager.getInstance();
-        Display1 display = Display1.getInstance();
-        SetupSocket socket = new SetupSocket(friend,listener,info,display);
+        ChatDisplay display = ChatDisplay.getInstance();
+        SetupSocket socket = new SetupSocket(friend,listener,info);
         socket.start();
         info.addSendToInfo(friend);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addFriendActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void messageAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageAllActionPerformed
         int id = Integer.parseInt(JOptionPane.showInputDialog("Who would you like to send a message to? (ID NUMBER)"));
         PrintWriter writer = info.getWriterBK(id);
         writer.println(textField.getText());
         textField.setText("");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_messageAllActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
         int id = Integer.parseInt(JOptionPane.showInputDialog("Who would you like to remove? (ID number)"));
         User member = info.getUserById(id);
         info.removeInfo(member);
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_removeUserActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void removeSendToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSendToActionPerformed
         int id = Integer.parseInt(JOptionPane.showInputDialog("Who would you like to remove? (ID number)"));
         User member = info.getUserById(id);
         info.removeSendToInfo(member);
         info.removeWriterBK(id);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_removeSendToActionPerformed
 
-
+    public void setCoordinator(User coordinator){
+        coordId.setText(Integer.toString(coordinator.id));
+        coordIp.setText(coordinator.ip);
+        coordPort.setText(Integer.toString(coordinator.port));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField coordId;
-    public javax.swing.JTextField coordIp;
-    public javax.swing.JTextField coordPort;
+    private javax.swing.JButton addFriend;
+    private javax.swing.JTextField coordId;
+    private javax.swing.JTextField coordIp;
+    private javax.swing.JTextField coordPort;
+    private javax.swing.JTextField coordTitle;
     public javax.swing.JList<Integer> ids;
     public javax.swing.JList<String> ips;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JList<Integer> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<Integer> jList3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -303,10 +301,16 @@ public class Display1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JButton messageAll;
+    public javax.swing.JButton messageSomeone;
     public javax.swing.JList<Integer> ports;
+    private javax.swing.JTextField receiveFromTitle;
+    private javax.swing.JButton removeSendTo;
+    private javax.swing.JButton removeUser;
+    private javax.swing.JList<Integer> sendToIds;
+    private javax.swing.JList<String> sendToIps;
+    private javax.swing.JList<Integer> sendToPorts;
+    private javax.swing.JTextField sendToTitle;
     public javax.swing.JTextArea textArea;
     public javax.swing.JTextField textField;
     // End of variables declaration//GEN-END:variables

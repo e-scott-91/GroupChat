@@ -13,9 +13,10 @@ import javax.swing.JOptionPane;
  * @author emmascott
  */
 public class Main {
-
+    
+    
     public static void main(String[] args) {
-        Display1 display = Display1.getInstance();
+        ChatDisplay display = ChatDisplay.getInstance();
         display.setVisible(true);
         CoordinatorManager coordinator = CoordinatorManager.getInstance();
         ReceiverManager listener = ReceiverManager.getInstance();
@@ -29,13 +30,13 @@ public class Main {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Display1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChatDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Display1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChatDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Display1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChatDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Display1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChatDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -43,22 +44,23 @@ public class Main {
             User self = new User(Integer.parseInt(args[0]), ip, Integer.parseInt(args[1]));
             listener.setReceiver(self);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(display, "You are not connected to the internet");
+            JOptionPane.showMessageDialog(display, "You are not connected to the internet, or your parameters are incorrect");
         }
 
         UserManager info = UserManager.getInstance();
         User self = listener.getReceiver();
-        ThreadPool serverSetup = new ThreadPool(listener, info, display);
+        ThreadPool serverSetup = new ThreadPool(listener, info);
 
         //Code that runs if the user is the first to the group and only inputs their details
         if (args.length == 2) {
             //Start their server threadPool ready for connecting users
             serverSetup.start();
-            SetupSocket own = new SetupSocket(self, listener, info, display);
+            SetupSocket own = new SetupSocket(self, listener, info);
             //Connect to their own server
             own.start();
             //Set the coordinator as themselves
             coordinator.setCoordinator(self);
+            display.setCoordinator(self);
             JOptionPane.showMessageDialog(display, "You are the group coordinator. When someone new joins, can you send them a list of "
                     + "everyone elses ips and ports");
 
@@ -70,7 +72,8 @@ public class Main {
                 //Create a user with the coordinators details and set them as the coordinator
                 User firstFriend = new User(Integer.parseInt(args[2]), args[3], Integer.parseInt(args[4]));
                 coordinator.setCoordinator(firstFriend);
-                SetupSocket link = new SetupSocket(firstFriend, listener, info, display);
+                display.setCoordinator(firstFriend);
+                SetupSocket link = new SetupSocket(firstFriend, listener, info);
                 //Connect to the coordinators server
                 link.start();
                 //Add the coordinator to the list of users you're connected to
@@ -79,7 +82,7 @@ public class Main {
                 //Occurs if the id and port number could not be processed by parseInt
                 JOptionPane.showMessageDialog(display,"The arguments that you passed were incorrect. Please close and try again");
             }
-            SetupSocket own = new SetupSocket(self, listener, info, display);
+            SetupSocket own = new SetupSocket(self, listener, info);
             //Connect to your own server
             own.start();
         } else {
@@ -89,5 +92,7 @@ public class Main {
         }
 
     }
+    
+    
 
 }

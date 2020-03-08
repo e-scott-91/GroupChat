@@ -12,7 +12,6 @@ package greenwich.chat;
 public class CoordinatorManager  {
     private static CoordinatorManager instance;
     private static User coordinator;
-    private static Display1 display = Display1.getInstance();
     
     private CoordinatorManager(){
     }
@@ -25,13 +24,11 @@ public class CoordinatorManager  {
     
     public void setCoordinator(User coordinator){
         this.coordinator = coordinator;
-        display.coordId.setText(Integer.toString(coordinator.id));
-        display.coordIp.setText(coordinator.ip);
-        display.coordPort.setText(Integer.toString(coordinator.port));
     }
     
     public User getCoordinator(){
         return coordinator;
     }
+
 
 }
